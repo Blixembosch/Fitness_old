@@ -443,8 +443,9 @@ function Overview({ S }) {
       </div>
     </div>
     <div className="card">
+      {/* Titled "Weight" (not "Body weight") so the detailed Body-weight card stays the unique one. */}
       <div className="row between" style={{ marginBottom: 6 }}>
-        <h2 style={{ margin: 0 }}>{t('Body weight')}</h2>
+        <h2 style={{ margin: 0 }}>{t('Weight')}</h2>
         <span className="dim small">{periodSub}</span>
       </div>
       {o.latestWeight != null ? <>
