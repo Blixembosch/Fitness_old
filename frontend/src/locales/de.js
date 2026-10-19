@@ -1,5 +1,9 @@
 // German UI strings. Keys are the English source strings (see lib/i18n.js).
 export default {
+  'Overview': 'Überblick',
+  'Month': 'Monat',
+  'Calorie deficit': 'Kaloriendefizit',
+  '{0} of {1} days on target': '{0} von {1} Tagen im Ziel',
   // --- generic ---
   'Confirm': 'Bestätigen',
   'Cancel': 'Abbrechen',

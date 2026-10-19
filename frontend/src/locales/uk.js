@@ -1,5 +1,9 @@
 // Ukrainian UI strings. Keys are the English source strings (see lib/i18n.js).
 export default {
+  'Overview': 'Огляд',
+  'Month': 'Місяць',
+  'Calorie deficit': 'Дефіцит калорій',
+  '{0} of {1} days on target': '{0} з {1} днів у цілі',
   'Confirm': 'Підтвердити',
   'Cancel': 'Скасувати',
   'Press back again to exit': 'Натисни «Назад» ще раз, щоб вийти',

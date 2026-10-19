@@ -1,5 +1,9 @@
 // Russian UI strings. Keys are the English source strings (see lib/i18n.js).
 export default {
+  'Overview': 'Обзор',
+  'Month': 'Месяц',
+  'Calorie deficit': 'Дефицит калорий',
+  '{0} of {1} days on target': '{0} из {1} дней в цели',
   'Confirm': 'Подтвердить',
   'Cancel': 'Отмена',
   'Press back again to exit': 'Нажмите «Назад» ещё раз, чтобы выйти',

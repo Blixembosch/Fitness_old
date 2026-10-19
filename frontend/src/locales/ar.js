@@ -1,5 +1,9 @@
 // Arabic UI strings. Keys are the English source strings (see lib/i18n.js).
 export default {
+  'Overview': 'نظرة عامة',
+  'Month': 'شهر',
+  'Calorie deficit': 'عجز السعرات',
+  '{0} of {1} days on target': '{0} من {1} يوم ضمن الهدف',
   'Confirm': 'تأكيد',
   'Cancel': 'إلغاء',
   'Press back again to exit': 'اضغط زر الرجوع مرة أخرى للخروج',

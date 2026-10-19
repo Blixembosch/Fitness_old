@@ -1,5 +1,9 @@
 // Simplified Chinese UI strings. Keys are the English source strings (see lib/i18n.js).
 export default {
+  'Overview': '概览',
+  'Month': '月',
+  'Calorie deficit': '热量缺口',
+  '{0} of {1} days on target': '{1} 天中 {0} 天达标',
   'Confirm': '确认',
   'Cancel': '取消',
   'Press back again to exit': '再按一次返回退出',

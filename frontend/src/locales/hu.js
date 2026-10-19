@@ -1,5 +1,9 @@
 // Hungarian UI strings. Keys are the English source strings (see lib/i18n.js).
 export default {
+  'Overview': 'Áttekintés',
+  'Month': 'Hónap',
+  'Calorie deficit': 'Kalóriadeficit',
+  '{0} of {1} days on target': '{1} napból {0} célon',
   // --- generic ---
   'Confirm': 'Megerősítés',
   'Cancel': 'Mégse',

@@ -7,6 +7,7 @@ import { fmtNum, fmtDate, fmtVol, todayISO, isoOf, weekKey, weekStartOf, exercis
 import { speedUnitOf, speedLabel, toSpeed } from '../lib/speed.js'
 import { t, exerciseNameFor, exerciseNameClass, getLang } from '../lib/i18n.js'
 import { bwSheet, goalSheet, calendarSheet, dayOverrideSheet, workoutDetailSheet, exerciseHistorySheet, WorkoutRow, bwDeltaColor, weighInsSheet } from '../sheets.jsx'
+import { overview, overviewWeightPoints } from '../lib/overview.js'
 import LineChart from '../components/LineChart.jsx'
 import Heatmap from '../components/Heatmap.jsx'
 import Icon from '../components/Icon.jsx'
@@ -404,10 +405,67 @@ export function WeeklyPlanVolume({ S }) {
   </div>
 }
 
+// Overview = the first thing the Stats tab shows: one window (a week or a month) reduced to four
+// summary tiles and the weight trend. The detailed charts live behind the "Details" toggle. All
+// the figures come from lib/overview.js; this only formats them.
+function Overview({ S }) {
+  const [period, setPeriod] = useState(7)
+  const o = overview(S, period)
+  const wpts = overviewWeightPoints(S, period)
+  const periodSub = period === 7 ? t('This week') : t('This month')
+  const sign = n => (n > 0 ? '+' : '') + fmtNum(n)
+  // Under the calorie target (a negative deficit) is the goal in a fat-loss phase, so green there.
+  const deficitColor = o.deficit == null ? undefined : o.deficit <= 0 ? 'var(--green)' : 'var(--orange)'
+  const weightColor = o.weight == null ? undefined : bwDeltaColor(o.weight.delta, o.latestWeight || 0)
+  return <>
+    <Segmented className="seg-range" value={period} onChange={setPeriod}
+      options={[{ value: 7, label: t('Week') }, { value: 30, label: t('Month') }]} />
+    <div className="tiles ov-tiles">
+      <div className="tile ov-tile">
+        <div className="k">{t('Workouts')}</div>
+        <div className="v">{o.workouts}</div>
+        <div className="d">{periodSub}</div>
+      </div>
+      <div className="tile ov-tile">
+        <div className="k">{t('Protein')}</div>
+        <div className="v">{o.proteinAvg}<small> g</small></div>
+        <div className="d">{o.nutritionDays ? t('{0} of {1} days on target', o.proteinMet, o.nutritionDays) : periodSub}</div>
+      </div>
+      <div className="tile ov-tile">
+        <div className="k">{t('Calorie deficit')}</div>
+        <div className="v" style={{ color: deficitColor }}>{o.deficit == null ? '–' : sign(o.deficit)}</div>
+        <div className="d">{periodSub}</div>
+      </div>
+      <div className="tile ov-tile">
+        <div className="k">{t('Weight')}</div>
+        <div className="v" style={{ color: weightColor }}>{o.weight == null ? '–' : sign(o.weight.delta) + ' ' + S.unit}</div>
+        <div className="d">{periodSub}</div>
+      </div>
+    </div>
+    <div className="card">
+      {/* Titled "Weight" (not "Body weight") so the detailed Body-weight card stays the unique one. */}
+      <div className="row between" style={{ marginBottom: 6 }}>
+        <h2 style={{ margin: 0 }}>{t('Weight')}</h2>
+        <span className="dim small">{periodSub}</span>
+      </div>
+      {o.latestWeight != null ? <>
+        <div className="row" style={{ gap: 10, alignItems: 'baseline' }}>
+          <div className="big">{fmtNum(o.latestWeight)} <span className="muted" style={{ fontSize: '1rem' }}>{S.unit}</span></div>
+          {o.weight && !!o.weight.delta && <span className="small" style={{ fontWeight: 600, color: weightColor }}>{sign(o.weight.delta)} {S.unit}</span>}
+        </div>
+        <div className="chart" style={{ marginTop: 8 }}><LineChart points={wpts} h={150} unit={S.unit} goal={S.targetW} /></div>
+      </> : <div className="muted small">{t('No weigh-ins yet. Log your weight to start the curve.')}</div>}
+    </div>
+  </>
+}
+
 export default function Stats() {
   const nav = useNavigate()
   const S = useStore(s => s.S)
   const [range, setRange] = useState(90)
+  // Overview is the landing view; Plan's deep link to the weekly-volume card opens Details directly.
+  const focusWeekly = /[?&]focus=weekly-volume\b/.test(window.location.hash || '')
+  const [tab, setTab] = useState(focusWeekly ? 'detail' : 'overview')
   // Plan's "Weekly muscle volume" row lands here (/stats?focus=weekly-volume). The router is a
   // HashRouter, so the query sits in the hash; the scroll waits a frame for the page's own
   // scroll-to-top on navigation to have happened first.
@@ -636,6 +694,12 @@ export default function Stats() {
     <div className="hdr"><div><h1>{t('Stats')}</h1><div className="sub">{t('Progress & history')}</div></div>
       <button className="iconbtn" onClick={() => nav('/history')} aria-label={t('History')}><Icon name="history" /></button></div>
 
+    <Segmented className="seg-range" value={tab} onChange={setTab}
+      options={[{ value: 'overview', label: t('Overview') }, { value: 'detail', label: t('Details') }]} />
+
+    <div hidden={tab !== 'overview'}><Overview S={S} /></div>
+
+    <div hidden={tab !== 'detail'}>
     <div className="tiles">
       <div className="tile"><div className="l"><Icon name="dumbbell" />{t('Workouts')}</div><div className="v">{workouts.length}</div></div>
       <div className="tile"><div className="l"><Icon name="calendar" />{t('This month')}</div><div className="v">{monthW}</div></div>
@@ -752,5 +816,6 @@ export default function Stats() {
       </div>
       <div className="list">{[...workouts].reverse().slice(0, 6).map(w => <WorkoutRow key={w.id} w={w} onClick={() => workoutDetailSheet(w)} />)}</div>
     </>}
+    </div>
   </>
 }
