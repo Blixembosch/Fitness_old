@@ -2261,4 +2261,5 @@ export default {
   'No days found in that file': 'O dosyada gün bulunamadı',
   'Imported {0} days': '{0} gün içe aktarıldı',
   'That isn’t a Cronometer daily-summary CSV': 'Bu bir Cronometer günlük özet CSV’si değil',
+  '~{0} min': '~{0} dk',
 }

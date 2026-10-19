@@ -21,6 +21,7 @@ import { MOBILE } from '../lib/mobile.js'
 import { coachAvailable } from '../lib/coach.js'
 import { queueOf, queueView } from '../lib/queue.js'
 import { deriveSessionName } from '../lib/session-merge.js'
+import { dayFocus, dayMuscles, dayLoad } from '../lib/routine-visual.js'
 import { markUndone, undoMarks } from '../lib/sync-merge.js'
 import {
   scheduleModeOf, queueRecovery, rotationIds, saveRotation, startNewPass, startPass, stopPass,
@@ -120,6 +121,9 @@ export function undoTakeOut({ id, at, label, snap, mark, marks }) {
 
 // The flash a row lands with when a swipe brought it (a duplicate, an undo): one per new value.
 let flashSeq = 0
+
+// A day's colour by what it works, so the week reads at a glance (routine-visual.js dayFocus).
+const FOCUS_COLOR = { upper: 'var(--blue)', lower: 'var(--purple)', cardio: 'var(--green)', full: 'var(--teal)' }
 
 export default function Plan() {
   const nav = useNavigate()
@@ -256,12 +260,25 @@ function Schedule({ S, update, nav, mode }) {
   // One weekday: what is on it at a glance, and a tap to change it (dayAssignSheet picks one
   // routine, several for a combined day, or a rest day).
   const dayRow = (d, rs = dayRoutines(d)) => {
-    return <div key={d} className="item plan-day" data-day={d} aria-label={t(DAYN[d])} {...tappable(() => dayAssignSheet(d))}>
+    const planned = rs.length > 0
+    const focus = planned ? dayFocus(rs) : null
+    const color = focus ? FOCUS_COLOR[focus] : 'transparent'
+    const muscles = planned ? dayMuscles(rs) : []
+    const load = planned ? dayLoad(rs) : null
+    // A single routine names its exercises (and rough time); a combined day counts its routines.
+    const sub = !planned ? t('Tap to plan something')
+      : rs.length > 1 ? routineCount(rs.length)
+        : [exCount(load.exercises), load.minutes ? t('~{0} min', load.minutes) : ''].filter(Boolean).join(' · ')
+    return <div key={d} className={'item plan-day' + (planned ? ' planned' : ' rest') + (d === todayDow ? ' today' : '')}
+      style={{ '--focus': color }} data-day={d} aria-label={t(DAYN[d])} {...tappable(() => dayAssignSheet(d))}>
       <span className={'plan-day-n' + (d === todayDow ? ' today' : '')} aria-hidden="true">{t(DAYS[d])}</span>
-      <span className={'lrow-i' + (rs.length ? '' : ' rest')}><Icon name={rs.length ? glyphOf(rs[0].emoji) : 'moon'} /></span>
+      <span className="lrow-i" style={planned ? { '--tint': color } : undefined}><Icon name={planned ? glyphOf(rs[0].emoji) : 'moon'} /></span>
       <div className="grow">
-        <div className="tt">{rs.length ? deriveSessionName(rs.map(r => r.name)) : t('Rest day')}</div>
-        <div className="ss">{rs.length === 1 ? exCount(rs[0].ex.length) : rs.length ? routineCount(rs.length) : t('Tap to plan something')}</div>
+        <div className="tt">{planned ? deriveSessionName(rs.map(r => r.name)) : t('Rest day')}</div>
+        <div className="ss">{sub}</div>
+        {planned && muscles.length > 0 && <div className="plan-chips" aria-hidden="true">
+          {muscles.map(bp => <span key={bp} className="plan-mchip">{t(bp)}</span>)}
+        </div>}
       </div>
       <Icon name="chevronRight" className="chev" />
     </div>
