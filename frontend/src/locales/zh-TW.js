@@ -1,4 +1,8 @@
 export default {
+  'Overview': '總覽',
+  'Month': '月',
+  'Calorie deficit': '熱量赤字',
+  '{0} of {1} days on target': '{1} 天中 {0} 天達標',
   'Confirm': '確認',
   'Cancel': '取消',
   'Press back again to exit': '再按一次返回以退出',

@@ -1,5 +1,9 @@
 // Polish UI strings. Keys are the English source strings (see lib/i18n.js).
 export default {
+  'Overview': 'Przegląd',
+  'Month': 'Miesiąc',
+  'Calorie deficit': 'Deficyt kaloryczny',
+  '{0} of {1} days on target': '{0} z {1} dni w celu',
   'Confirm': 'Potwierdź',
   'Cancel': 'Anuluj',
   'Press back again to exit': 'Naciśnij wstecz ponownie, aby wyjść',

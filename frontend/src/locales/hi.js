@@ -1,5 +1,9 @@
 // Hindi UI strings. Keys are the English source strings (see lib/i18n.js).
 export default {
+  'Overview': 'अवलोकन',
+  'Month': 'महीना',
+  'Calorie deficit': 'कैलोरी घाटा',
+  '{0} of {1} days on target': '{1} में से {0} दिन लक्ष्य पर',
   'Confirm': 'पुष्टि करें',
   'Cancel': 'रद्द करें',
   'Press back again to exit': 'बाहर निकलने के लिए फिर से बैक दबाएँ',

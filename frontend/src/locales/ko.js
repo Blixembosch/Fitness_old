@@ -1,5 +1,9 @@
 // Korean UI strings. Keys are the English source strings (see lib/i18n.js).
 export default {
+  'Overview': '개요',
+  'Month': '월',
+  'Calorie deficit': '칼로리 적자',
+  '{0} of {1} days on target': '{1}일 중 {0}일 목표 달성',
   'Confirm': '확인',
   'Cancel': '취소',
   'Press back again to exit': '뒤로를 한 번 더 누르면 종료됩니다',

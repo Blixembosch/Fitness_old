@@ -1,5 +1,9 @@
 // Bengali UI strings. Keys are the English source strings (see lib/i18n.js).
 export default {
+  'Overview': 'সারসংক্ষেপ',
+  'Month': 'মাস',
+  'Calorie deficit': 'ক্যালরি ঘাটতি',
+  '{0} of {1} days on target': '{1} দিনের মধ্যে {0} দিন লক্ষ্যে',
   'Confirm': 'নিশ্চিত করুন',
   'Cancel': 'বাতিল',
   'Press back again to exit': 'বের হতে আবার ব্যাক চাপুন',

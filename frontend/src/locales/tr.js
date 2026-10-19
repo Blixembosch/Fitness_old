@@ -1,5 +1,9 @@
 // Turkish UI strings. Keys are the English source strings (see lib/i18n.js).
 export default {
+  'Overview': 'Genel bakış',
+  'Month': 'Ay',
+  'Calorie deficit': 'Kalori açığı',
+  '{0} of {1} days on target': '{1} günün {0}’i hedefte',
   'Confirm': 'Onayla',
   'Cancel': 'İptal',
   'Press back again to exit': 'Çıkmak için geri tuşuna tekrar basın',

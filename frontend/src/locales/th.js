@@ -1,5 +1,9 @@
 // Thai UI strings. Keys are the English source strings (see lib/i18n.js).
 export default {
+  'Overview': 'ภาพรวม',
+  'Month': 'เดือน',
+  'Calorie deficit': 'แคลอรีขาดดุล',
+  '{0} of {1} days on target': '{0} จาก {1} วันตามเป้า',
   // --- generic ---
   'Confirm': 'ยืนยัน',
   'Cancel': 'ยกเลิก',

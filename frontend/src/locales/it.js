@@ -1,5 +1,9 @@
 // Italian UI strings. Keys are the English source strings (see lib/i18n.js).
 export default {
+  'Overview': 'Panoramica',
+  'Month': 'Mese',
+  'Calorie deficit': 'Deficit calorico',
+  '{0} of {1} days on target': '{0} di {1} giorni a target',
   'Confirm': 'Conferma',
   'Cancel': 'Annulla',
   'Press back again to exit': 'Premi di nuovo indietro per uscire',
