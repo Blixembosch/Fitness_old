@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useStore } from '../store/useStore.js'
 import { useUI } from '../store/useUI.js'
-import { DAYN, DAYS, weekOrder, weekStartOf, uid, exCount, todayISO, fmtDate } from '../lib/format.js'
+import { DAYN, DAYS, weekOrder, weekStartOf, uid, exCount, routineCount, todayISO, fmtDate } from '../lib/format.js'
 import { t } from '../lib/i18n.js'
 import {
   dayAssignSheet, starterPlanSheet, confirmSheet, menuSheet,
@@ -265,9 +265,10 @@ function Schedule({ S, update, nav, mode }) {
     const color = focus ? FOCUS_COLOR[focus] : 'transparent'
     const muscles = planned ? dayMuscles(rs) : []
     const load = planned ? dayLoad(rs) : null
-    const sub = planned
-      ? [exCount(load.exercises), load.minutes ? t('~{0} min', load.minutes) : ''].filter(Boolean).join(' · ')
-      : t('Tap to plan something')
+    // A single routine names its exercises (and rough time); a combined day counts its routines.
+    const sub = !planned ? t('Tap to plan something')
+      : rs.length > 1 ? routineCount(rs.length)
+        : [exCount(load.exercises), load.minutes ? t('~{0} min', load.minutes) : ''].filter(Boolean).join(' · ')
     return <div key={d} className={'item plan-day' + (planned ? ' planned' : ' rest') + (d === todayDow ? ' today' : '')}
       style={{ '--focus': color }} data-day={d} aria-label={t(DAYN[d])} {...tappable(() => dayAssignSheet(d))}>
       <span className={'plan-day-n' + (d === todayDow ? ' today' : '')} aria-hidden="true">{t(DAYS[d])}</span>
