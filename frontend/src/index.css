@@ -1698,6 +1698,13 @@ body.no-tabbar #timer.working{box-shadow:inset 0 var(--hair) 0 var(--acc),0 -10p
 .tile .l .icn{font-size:14px;color:var(--label)}
 .tile .v{font-size:26px;font-weight:600;letter-spacing:-.026em;margin-top:5px;line-height:1.1}
 .tile.tappable:active{background:var(--surface-2)}
+/* Home activity rings (training / protein / calories) */
+.rings{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.ringcard{background:var(--surface);border-radius:var(--r-card);padding:14px 8px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.ringcard .ring{display:block}
+.ringcard .v{font-size:15px;font-weight:700;letter-spacing:-.01em;line-height:1;font-variant-numeric:tabular-nums}
+.ringcard .v small{color:var(--label-3);font-weight:700}
+.ringcard .k{font-size:11.5px;color:var(--label-2);font-weight:600;margin-top:3px}
 
 /* --- PR badge --- */
 .pr{
