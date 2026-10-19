@@ -2340,4 +2340,5 @@ export default {
   'No days found in that file': 'No days found in that file',
   'Imported {0} days': 'Imported {0} days',
   'That isn’t a Cronometer daily-summary CSV': 'That isn’t a Cronometer daily-summary CSV',
+  '~{0} min': '~{0} min',
 }
